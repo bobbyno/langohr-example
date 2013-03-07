@@ -1,0 +1,2 @@
+(change-defaults :visible-failure-namespace true
+                 :fact-filter (complement :integration))
