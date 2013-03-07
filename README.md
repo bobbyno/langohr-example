@@ -1,6 +1,6 @@
 # quux
 
-An example we cooked up while comparing Clojure+Langohr to Java+RabbitMQ.
+An example @bobbyno and I cooked up while comparing Clojure+Langohr to Java+RabbitMQ.
 
 Note: this example uses a patched example of Langohr. It
 has:
