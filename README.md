@@ -4,13 +4,14 @@ An example @bobbyno and I cooked up while comparing Clojure+Langohr to Java+Rabb
 
 Note: this example uses a patched example of Langohr. It
 has:
-1. print statements for consumer events
-2. A fix to the handling of `subscribe` keys like
-   :handle-consume-ok. The bug has been fixed but isn't yet
-   in Clojars.
+
+* print statements for consumer events
+* A fix to the handling of `subscribe` keys like
+     :handle-consume-ok. The bug has been fixed but isn't yet
+     in Clojars.
 
 
-The project uses [Midje](https://github.com/marick/Midje/)).
+The project uses [Midje](https://github.com/marick/Midje/).
 
 ## How to run the tests
 
