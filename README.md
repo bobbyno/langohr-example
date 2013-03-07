@@ -1,8 +1,10 @@
 # quux
 
-An example @bobbyno and I cooked up while comparing Clojure+Langohr to Java+RabbitMQ.
+An example @bobbyno and I cooked up while comparing
+Clojure+Langohr to Java+RabbitMQ. It does some things
+differently than the official Langohr examples.
 
-Note: this example uses a patched example of Langohr. It
+Note: this example temporarily uses a patched example of Langohr. It
 has:
 
 * print statements for consumer events
