@@ -2,6 +2,5 @@
   :description "Cool new project to do things and stuff"
   :dependencies [[org.clojure/clojure "1.4.0"]
                  [clj-time "0.4.4"]
-                 [com.novemberain/langohr "1.0.0-beta9"]]
+                 [com.novemberain/langohr "1.0.0-beta13"]]
   :profiles {:dev {:dependencies [[midje "1.5-beta3"]]}})
-  
