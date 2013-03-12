@@ -34,7 +34,7 @@
     (:channel endpoints) => rmq/closed?
     (:connection endpoints) => rmq/closed?
     (.isAlive (:thread endpoints)) => false))
-  
+
 (fact "sending a message through AMQP."
   (let [promise (promise)]
     (launch-asynchronous-string-handler configuration (partial deliver promise))

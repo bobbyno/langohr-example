@@ -16,7 +16,6 @@
                     :exchange-connection-uri (or (System/getenv "CLOUDAMQP_URL") "amqp://guest:guest@localhost")
                     :queue-name "user.profile"
                     :routing-key "user.profile"
-
                     :durable? true
                     :exclusive? false
                     :auto-delete? false
@@ -31,13 +30,13 @@
 ;;;    Some of the endpoints are only used for testing (to check if they've all
 ;;;    been closed.
 
-(defn make-endpoints [{:keys [exchange-name exchange-type routing-key
-                              queue-name durable? exclusive? auto-delete?]}]
+(defn make-endpoints [{:keys [exchange-name exchange-type routing-key queue-name durable? exclusive? auto-delete? x-ha-policy]}]
   (let [connection (rmq/connect)
         channel (lch/open connection)
         queue (.getQueue (lq/declare channel queue-name
-                                     :durable durable? :exclusive exclusive? :auto-delete auto-delete?))]
-     (le/declare channel exchange-name exchange-type)
+                                     :durable durable? :exclusive exclusive? :auto-delete auto-delete?
+                                     :arguments {"x-ha-policy" x-ha-policy}))]
+     (le/declare channel exchange-name exchange-type :durable durable?)
      (lq/bind channel queue exchange-name :routing-key routing-key)
      {:connection connection
       :channel channel
@@ -68,7 +67,7 @@
 (defn launch-asynchronous-string-handler [configuration handler]
   (launch-asynchronous-handler configuration
                                (fn [channel metadata payload] (handler (String. payload "UTF-8")))))
-  
+
 
 ;;; Even though we only send one string in the first test, I want to
 ;;; separate making a connection from sending a message.
