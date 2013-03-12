@@ -52,7 +52,7 @@
         thread (Thread. #(lc/subscribe (:channel endpoints) queue-name handler :auto-ack auto-ack?
                                        :consumer-tag consumer-tag
                                        :handle-consume-ok (fn [& args] (deliver consumer-approved? true))
-                                       :handle-shutdown-signal (fn [& args] (prn "shutdown caught" args))
+                                       :handle-shutdown-signal (fn [& args] (prn "shutdown caught - try to reconnect" args))
                                        :handle-recover-ok (fn [& args] (prn "recover caught" args))))]
     (.start thread)
     (if (deref consumer-approved? 5000 false)
@@ -66,7 +66,7 @@
 
 (defn launch-asynchronous-string-handler [configuration handler]
   (launch-asynchronous-handler configuration
-                               (fn [channel metadata payload] (handler (String. payload "UTF-8")))))
+                               (fn [channel metadata ^bytes payload] (handler (String. payload "UTF-8")))))
 
 
 ;;; Even though we only send one string in the first test, I want to
@@ -82,3 +82,7 @@
   (let [endpoints (make-endpoints configuration)]
     (fn [payload]
       (lb/publish (:channel endpoints) exchange-name routing-key payload :content-type "text/plain"))))
+
+(defn -main [& args]
+  (launch-asynchronous-string-handler configuration (fn [msg] (prn "message received:" msg)))
+)
